@@ -24,6 +24,14 @@
                 v-model="password"
                 :rules="passwordRules"
               ></v-text-field>
+              <v-text-field  
+                prepend-icon="mdi-lock" 
+                name="confirm-password" 
+                label="Confirm Password" 
+                type="password" 
+                v-model="confirmPassword"
+                :rules="confirmPasswordRules"
+              ></v-text-field>
             </v-form> 
           </v-card-text>
           <v-card-actions>
@@ -33,7 +41,7 @@
               @click="onSubmit"
               :disabled="!valid"
             >
-            Create Account
+              Create Account
             </v-btn>
           </v-card-actions>  
         </v-card>
@@ -48,6 +56,7 @@ export default {
     return {
       email: "",
       password: "",
+      confirmPassword: "",
       valid: false,
       emailRules: [
         v => !!v || "E-mail is required",
@@ -56,6 +65,10 @@ export default {
       passwordRules: [
         v => !!v || "Password is required",
         v => (v && v.length >= 6) || "Password must be at least 6 characters",
+      ],
+      confirmPasswordRules: [
+        v => !!v || "Password confirmation is required",
+        v => v === this.password || "Passwords must match",
       ],
     };  
   },
@@ -66,7 +79,7 @@ export default {
           email: this.email,
           password: this.password,
         };
-        console.log("User submitted:", user);
+        console.log("User registered:", user);
       }
     },
   },
